@@ -5,7 +5,8 @@
     <div>
         <a href="@{/}">Demo</a>
         <form th:action="@{/logout}" method="post">
-            <input type="submit" value="ログアウト" />
+            <span th:text="${email}"></span>
+            <input type="submit" value="Logout" />
         </form>
     </div>
 </nav>
