@@ -35,7 +35,8 @@ public class SecurityConfig {
                         login -> login.loginPage("/login")
                                 .usernameParameter("email")
                                 .defaultSuccessUrl("/")
-                );
+                )
+                .logout(logout -> logout.logoutSuccessUrl("/login"));
         return http.build();
     }
 

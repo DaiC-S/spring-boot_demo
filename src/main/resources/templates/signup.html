@@ -5,6 +5,7 @@
     <title>Sign up</title>
 </head>
 <body>
+<div>
 <h1>Welcome!</h1>
 <form th:action="@{/signup}" method="post" th:object="${signupForm}">
     <div>
@@ -19,5 +20,7 @@
         <button type="submit">Sign up</button>
     </div>
 </form>
+    <p>If you already have an account, <a href="@{/login}">Login</a></p>
+</div>
 </body>
 </html>
