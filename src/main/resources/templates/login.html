@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Welcome back!</h1>
+<form th:action="@{/login}" method="post" th:object="${loginForm}">
+    <div th:if="${param.error}">
+        Invalid email or password.
+    </div>
+    <div>
+        <label for="email">ID(Email)</label>
+        <input type="text" th:field="*{email}" placeholder="example@mail.com">
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" th:field="*{password}" placeholder="*You can use only one-byte alphanumeric character">
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+</body>
+</html>

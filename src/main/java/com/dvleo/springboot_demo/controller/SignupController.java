@@ -26,6 +26,6 @@ public class SignupController {
     public String saveSignupForm(SignupForm singnupform){
         String encodedPassword = passwordEncoder.encode(singnupform.getPassword());
         userRepository.insert(singnupform.getEmail(), encodedPassword);
-        return "redirect: /";
+        return "redirect:/";
     }
 }
