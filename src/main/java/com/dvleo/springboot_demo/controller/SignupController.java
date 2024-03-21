@@ -18,14 +18,14 @@ public class SignupController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/signup")
-    public String resSignupView(@ModelAttribute("signupForm") SignupForm singnupform){
+    public String resSignupView(@ModelAttribute("signupForm") SignupForm signupform){
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String saveSignupForm(SignupForm singnupform){
-        String encodedPassword = passwordEncoder.encode(singnupform.getPassword());
-        userRepository.insert(singnupform.getEmail(), encodedPassword);
+    public String saveSignupForm(SignupForm signupform){
+        String encodedPassword = passwordEncoder.encode(signupform.getPassword());
+        userRepository.insert(signupform.getEmail(), encodedPassword);
         return "redirect:/";
     }
 }

@@ -3,7 +3,7 @@
 <body>
 <nav th:fragment="header">
     <div>
-        <a href="@{/}">Demo</a>
+        <a th:href="@{/}">Demo</a>
         <form th:action="@{/logout}" method="post">
             <span th:text="${email}"></span>
             <input type="submit" value="Logout" />

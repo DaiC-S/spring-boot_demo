@@ -5,22 +5,26 @@
     <title>Login</title>
 </head>
 <body>
-<h1>Welcome back!</h1>
-<form th:action="@{/login}" method="post" th:object="${loginForm}">
-    <div th:if="${param.error}">
-        Invalid email or password.
-    </div>
-    <div>
-        <label for="email">ID(Email)</label>
-        <input type="text" th:field="*{email}" placeholder="example@mail.com">
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" th:field="*{password}" placeholder="*You can use only one-byte alphanumeric character">
-    </div>
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+<div>
+    <h1>Welcome back!</h1>
+    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+        <div th:if="${param.error}">
+            Invalid email or password.
+        </div>
+        <div>
+            <label for="email">ID(Email)</label>
+            <input type="text" th:field="*{email}" placeholder="example@mail.com">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" th:field="*{password}" placeholder="*You can use only one-byte alphanumeric character">
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+    <p>If you don't have an account, <a th:href="@{/signup}">Sign up</a></p>
+</div>
+
 </body>
 </html>
