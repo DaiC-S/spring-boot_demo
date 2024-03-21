@@ -3,6 +3,7 @@ package com.dvleo.springboot_demo.controller;
 import com.dvleo.springboot_demo.form.SignupForm;
 import com.dvleo.springboot_demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,10 @@ public class SignupController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/signup")
-    public String resSignupView(@ModelAttribute("signupForm") SignupForm signupform){
+    public String resSignupView(@ModelAttribute("signupForm") SignupForm signupform, Authentication authentication){
+        if(authentication != null && authentication.isAuthenticated()){
+            return "redirect:/";
+        }
         return "signup";
     }
 
