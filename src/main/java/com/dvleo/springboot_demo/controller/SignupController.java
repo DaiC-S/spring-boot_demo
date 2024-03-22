@@ -2,6 +2,9 @@ package com.dvleo.springboot_demo.controller;
 
 import com.dvleo.springboot_demo.form.SignupForm;
 import com.dvleo.springboot_demo.repository.UserRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +22,7 @@ public class SignupController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/signup")
-    public String resSignupView(@ModelAttribute("signupForm") SignupForm signupform, Authentication authentication){
+    public String resSignupView(@ModelAttribute("signupForm") SignupForm signupForm, Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
             return "redirect:/";
         }
@@ -27,9 +30,17 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String saveSignupForm(SignupForm signupform){
-        String encodedPassword = passwordEncoder.encode(signupform.getPassword());
-        userRepository.insert(signupform.getEmail(), encodedPassword);
-        return "redirect:/";
+    public String saveSignupForm(SignupForm signupForm, HttpServletRequest request, HttpServletResponse response){
+        String encodedPassword = passwordEncoder.encode(signupForm.getPassword());
+        userRepository.insert(signupForm.getEmail(), encodedPassword);
+
+        // ユーザー登録後の自動ログイン：セキュリティ面に問題あり
+        try {
+            request.login(signupForm.getEmail(), signupForm.getPassword());
+            return "redirect:/";
+        } catch (ServletException e) {
+            return "redirect:/login";
+        }
+
     }
 }
