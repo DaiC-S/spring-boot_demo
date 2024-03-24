@@ -1,5 +1,6 @@
 package com.dvleo.springboot_demo.controller;
 
+import com.dvleo.springboot_demo.entity.UserEntity;
 import com.dvleo.springboot_demo.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -7,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +23,13 @@ public class UserdetailController {
 
     @GetMapping("/users/{id}")
     public String showUserDetail(@PathVariable long id, Model model){
-        var user = userRepository.findById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName =  auth.getName();
 
-        if (user == null) {
-            return "redirect/";
+        UserEntity user = userRepository.findById(id);
+
+        if(user == null || !user.getEmail().equals(currentUserName)){
+            return "redirect:/";
         }
 
         model.addAttribute("user", user);
