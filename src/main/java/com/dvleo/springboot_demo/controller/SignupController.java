@@ -49,6 +49,11 @@ public class SignupController {
 
         String encodedPassword = passwordEncoder.encode(signupForm.getPassword());
         userRepository.insert(signupForm.getEmail(), encodedPassword);
+        /*
+        Spring Security有効後は、DBに登録した未ハッシュ化パスワードを使ったログインができなくなる。
+        ログインを試みると、デフォルトのエラーメッセージ（`Invalid email or password.`）が出る。
+        */
+
 
         // ユーザー登録後の自動ログイン：セキュリティ面に問題あり
         try {
