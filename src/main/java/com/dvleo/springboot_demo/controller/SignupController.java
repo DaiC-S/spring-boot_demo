@@ -5,10 +5,12 @@ import com.dvleo.springboot_demo.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +32,12 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String saveSignupForm(SignupForm signupForm, HttpServletRequest request, HttpServletResponse response){
+    public String saveSignupForm(@Valid SignupForm signupForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response){
+
+        if(bindingResult.hasErrors()){
+            return "signup";
+        }
+
         String encodedPassword = passwordEncoder.encode(signupForm.getPassword());
         userRepository.insert(signupForm.getEmail(), encodedPassword);
 
