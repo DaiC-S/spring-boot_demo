@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Page</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/users/{userId}/update(userId=${user.getId()})}" th:method="post" th:object="${user}">
+    <!--
+        Javaの標準的なBeanの命名規則に従って、プロパティにアクセスするためにはゲッターメソッド `getId()` を使用するのが一般的。
+        Thymeleafは、内部的にはプロパティ名を使って対応するゲッターメソッドを呼び出す。
+        なので、`user.id`と指定しても、Thymeleafは裏側でuser.getId()メソッドを探して実行する。
+        明示的にuser.getId()と書くことは、この自動的な振る舞いをより明確に示しているだけで、機能的には同じ。
+    -->
+
+        <span th:text="${id}"></span>
+        <button type="submit" th:formaction="@{/users/{userId}/delete(userId=${user.getId()})}">Delete Me</button>
+    </form>
+</div>
+
+</body>
+</html>

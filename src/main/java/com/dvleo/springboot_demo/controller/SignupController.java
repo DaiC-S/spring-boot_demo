@@ -1,5 +1,6 @@
 package com.dvleo.springboot_demo.controller;
 
+import com.dvleo.springboot_demo.entity.UserEntity;
 import com.dvleo.springboot_demo.form.SignupForm;
 import com.dvleo.springboot_demo.repository.UserRepository;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 public class SignupController {
@@ -26,6 +29,12 @@ public class SignupController {
     @GetMapping("/signup")
     public String resSignupView(@ModelAttribute("signupForm") SignupForm signupForm, Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
+            // DBからユーザーを検索
+            Optional<UserEntity> userOptional = Optional.ofNullable(userRepository.findByEmail(authentication.getName()));
+            if (!userOptional.isPresent()) {
+                // ユーザーが存在しない場合は、新規登録画面にリダイレクト
+                return "redirect:/signup";
+            }
             return "redirect:/";
         }
         return "signup";
